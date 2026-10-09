@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="banner.svg" alt="Christmas 78kg Blueprint" width="100%">
+<img src="assets/banner.svg" alt="Christmas 78kg Blueprint" width="100%">
 
 <br>
 
@@ -119,6 +119,8 @@ git push
 1. Open the hosted address in **Safari**.
 2. Tap **Share**, then **Add to Home Screen**.
 3. Launch it from the new icon. It opens full screen with no browser bars.
+
+The icon is embedded in `index.html`, so it needs no extra files. iOS saves the icon at the moment you add the app, so after changing the logo, delete the old home-screen icon and add it again.
 
 ### 3. Run it locally
 
@@ -251,7 +253,13 @@ The week runs Push (Mon), Pull (Tue), Recovery (Wed), Lower body (Thu), Upper bo
 ├── sw.js               # optional service worker for offline launch
 ├── README.md
 └── assets/
-    └── banner.svg      # README banner
+    ├── logo.svg               # master logo (1024 x 1024)
+    ├── apple-touch-icon.png   # 180 x 180 home-screen icon
+    ├── icon-192.png           # 192 x 192
+    ├── icon-512.png           # 512 x 512
+    ├── icon-1024.png          # 1024 x 1024
+    ├── favicon-32.png         # browser tab icon
+    └── banner.svg             # README banner
 ```
 
 <br>
