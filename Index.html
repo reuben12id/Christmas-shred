@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Christmas Physique & Strength Blueprint</title>
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-card: #141822;
+            --bg-card-hover: #1c2230;
+            --accent-green: #00e676;
+            --accent-cyan: #00e5ff;
+            --accent-amber: #ffab00;
+            --accent-red: #ff1744;
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --border-color: #242c3d;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 12px;
+            padding-bottom: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Header & App Title */
+        .app-header {
+            text-align: center;
+            margin-bottom: 16px;
+            padding: 12px 0;
+        }
+
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Phase Selector Pills */
+        .phase-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 16px;
+            background: rgba(20, 24, 34, 0.6);
+            padding: 4px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .phase-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 4px;
+            border-radius: var(--radius-md);
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .phase-btn.active {
+            background: var(--bg-card-hover);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+        }
+
+        /* Day Selector Bar */
+        .day-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+        }
+
+        .day-btn {
+            flex: 1;
+            min-width: 42px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 10px 0;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .day-btn.active {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+            font-weight: 800;
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.3);
+        }
+
+        /* Key Metrics Grid */
+        .metrics-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .metric-box {
+            background: rgba(10, 12, 16, 0.5);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .metric-lbl {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Protocols Box */
+        .protocol-strip {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .protocol-box {
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+        }
+
+        .protocol-box.trt {
+            background: rgba(255, 171, 0, 0.05);
+            border-color: rgba(255, 171, 0, 0.2);
+        }
+
+        .protocol-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-amber);
+        }
+
+        .protocol-box:not(.trt) .protocol-tag {
+            color: var(--accent-cyan);
+        }
+
+        .protocol-desc {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2px;
+        }
+
+        /* Workout Section */
+        .workout-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .workout-header {
+            margin-bottom: 12px;
+        }
+
+        .workout-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .workout-focus {
+            font-size: 0.72rem;
+            color: var(--accent-green);
+            margin-top: 2px;
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exercise-item {
+            background: rgba(10, 12, 16, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            position: relative;
+        }
+
+        .ex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .ex-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .ex-target {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--accent-amber);
+            background: rgba(255, 171, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 171, 0, 0.2);
+        }
+
+        .ex-specs {
+            display: flex;
+            gap: 12px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .ex-spec-val {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        /* Checkbox interactive feature */
+        .set-checkers {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .set-pill {
+            width: 28px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .set-pill.done {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+        }
+
+        /* Meal Plan */
+        .meal-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .meal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meal-item {
+            background: rgba(10, 12, 16, 0.5);
+            padding: 10px;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .meal-time-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .meal-time {
+            color: var(--accent-cyan);
+        }
+
+        .meal-name {
+            color: var(--text-primary);
+        }
+
+        .meal-desc {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .meal-macros {
+            font-size: 0.68rem;
+            color: var(--accent-green);
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        /* Ergogenic Stack Footer */
+        .stack-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stack-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            padding-left: 10px;
+            border-left: 2px solid var(--accent-amber);
+        }
+
+        .stack-item strong {
+            color: var(--text-primary);
+        }
+
+        .rest-day-notice {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--text-secondary);
+        }
+
+        .rest-day-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-amber);
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="app-title">Christmas 78kg Blueprint</div>
+        <div class="app-subtitle">11-Week Muscle Memory & Strength Engine</div>
+    </header>
+
+    <!-- Phase Switcher -->
+    <div class="phase-selector">
+        <button class="phase-btn active" onclick="switchPhase(1)">PHASE 1<br><span style="font-size:0.58rem; opacity:0.8;">Oct 9 - Nov 5</span></button>
+        <button class="phase-btn" onclick="switchPhase(2)">PHASE 2<br><span style="font-size:0.58rem; opacity:0.8;">Nov 6 - Dec 3</span></button>
+        <button class="phase-btn" onclick="switchPhase(3)">PHASE 3<br><span style="font-size:0.58rem; opacity:0.8;">Dec 4 - Dec 25</span></button>
+    </div>
+
+    <!-- Day Switcher -->
+    <div class="day-selector">
+        <button class="day-btn active" onclick="switchDay('MON')">MON</button>
+        <button class="day-btn" onclick="switchDay('TUE')">TUE</button>
+        <button class="day-btn" onclick="switchDay('WED')">WED</button>
+        <button class="day-btn" onclick="switchDay('THU')">THU</button>
+        <button class="day-btn" onclick="switchDay('FRI')">FRI</button>
+        <button class="day-btn" onclick="switchDay('SAT')">SAT</button>
+        <button class="day-btn" onclick="switchDay('SUN')">SUN</button>
+    </div>
+
+    <!-- Metrics Summary Card -->
+    <div class="metrics-card">
+        <div class="card-title">
+            <span id="phase-title-text">Phase 1 Target</span>
+            <span id="phase-target-weight" style="color:var(--accent-green); font-size:0.75rem;">Target: 73.0 kg</span>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <div class="metric-val" id="macro-calories">2,360</div>
+                <div class="metric-lbl">KCAL / DAY</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-val" id="macro-protein" style="color:var(--accent-cyan);">175g</div>
+                <div class="metric-lbl">PROTEIN</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-val" id="macro-carbs" style="color:var(--accent-green);">280g</div>
+                <div class="metric-lbl">CARBS</div>
+            </div>
+        </div>
+        <div class="protocol-strip">
+            <div class="protocol-box trt">
+                <div class="protocol-tag">TRT Protocol</div>
+                <div class="protocol-desc" id="protocol-trt">250mg / week Test E</div>
+            </div>
+            <div class="protocol-box">
+                <div class="protocol-tag">Creatine Loading</div>
+                <div class="protocol-desc" id="protocol-creatine">20g / day (Split 4x5g)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Schedule Card -->
+    <div class="workout-card">
+        <div class="workout-header">
+            <div class="workout-name" id="workout-title">Push A (Chest, Anterior Delts, Triceps)</div>
+            <div class="workout-focus" id="workout-subtitle">Focus: Hyperemia & Scapular Retraction</div>
+        </div>
+        <div class="exercise-list" id="exercise-container">
+            <!-- Exercises inserted dynamically via JS -->
+        </div>
+    </div>
+
+    <!-- Daily Meal Plan Card -->
+    <div class="meal-card">
+        <div class="card-title">
+            <span>Daily Nutrition Schedule</span>
+            <span style="color:var(--text-secondary); font-size:0.7rem;" id="water-target">Water: 3.5L / Day</span>
+        </div>
+        <div class="meal-list" id="meal-container">
+            <!-- Meals inserted dynamically via JS -->
+        </div>
+    </div>
+
+    <!-- Peri-Workout Ergogenic Stack -->
+    <div class="stack-card">
+        <div class="card-title">Peri-Workout Ergogenic Stack</div>
+        <div class="stack-item">
+            <strong>90m Pre-Workout:</strong> Meal 3 + 2,000mg Himalayan Salt (Intravascular Sodium Loading)
+        </div>
+        <div class="stack-item">
+            <strong>45m Pre-Workout:</strong> 8g L-Citrulline Malate + 5g Creatine + 500ml Water
+        </div>
+        <div class="stack-item">
+            <strong>Intra-Workout:</strong> 30g Highly Branched Cyclic Dextrin + 10g EAAs + 500mg Sodium in 750ml Water
+        </div>
+        <div class="stack-item">
+            <strong>Post-Workout (0-30m):</strong> Meal 4 (Fast Insulin Spike for Glycogen Shuttling)
+        </div>
+    </div>
+
+    <script>
+        // Database of Phases, Days, Workouts, and Meals
+        let currentPhase = 1;
+        let currentDay = 'MON';
+
+        const phaseData = {
+            1: {
+                title: "Phase 1: Sarcoplasmic Refill & Neural Jump",
+                dates: "Oct 9 - Nov 5 (Weeks 1-4)",
+                weightTarget: "69.4kg → 73.0kg",
+                calories: "2,360",
+                protein: "175g",
+                carbs: "280g",
+                fats: "60g",
+                trt: "250mg/wk Test E (125mg M/Th)",
+                creatine: "20g/day (W1-3) → 5g (W4)",
+                water: "3.5L / Day",
+                workouts: {
+                    MON: {
+                        name: "Push A (Chest, Shoulders, Triceps)",
+                        subtitle: "Focus: Controlled Eccentrics & Intravascular Pump",
+                        exercises: [
+                            { name: "Incline DB Bench Press (30°)", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "120s", target: "20kg → 25kg" },
+                            { name: "Flat DB Chest Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "22.5kg → 28kg" },
+                            { name: "Seated DB Shoulder Press (80°)", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-0", rest: "90s", target: "16kg → 20kg" },
+                            { name: "Standing DB Lateral Raise", spec: "4 Sets × 12-15 Reps", tempo: "2-0-1-1", rest: "60s", target: "8kg → 10kg" },
+                            { name: "Cable Rope Tricep Pushdown", spec: "3 Sets × 12-15 Reps", tempo: "3-0-1-1", rest: "60s", target: "Stack Build" }
+                        ]
+                    },
+                    TUE: {
+                        name: "Pull A (Lats, Mid-Back, Biceps)",
+                        subtitle: "Focus: Lat Length Stretch & Bicep Peak",
+                        exercises: [
+                            { name: "Matrix Lat Pulldown (Neutral)", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-1", rest: "90s", target: "27kg → 35kg" },
+                            { name: "Seated Low Cable Row (V-Bar)", spec: "3 Sets × 10-12 Reps", tempo: "2-1-1-1", rest: "90s", target: "Strict Form" },
+                            { name: "Chest-Supported Incline DB Row", spec: "3 Sets × 10-12 Reps", tempo: "2-1-1-0", rest: "90s", target: "18kg → 22.5kg" },
+                            { name: "Low Pulley Cable Bicep Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "60s", target: "Squeeze Top" },
+                            { name: "Incline DB Bicep Curl (60°)", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "10kg → 12.5kg" }
+                        ]
+                    },
+                    WED: {
+                        name: "Active Recovery & Mobility",
+                        subtitle: "Rest, Intra-Hydration & Light Walk",
+                        exercises: []
+                    },
+                    THU: {
+                        name: "Lower Body (Quads, Hamstrings, Calves)",
+                        subtitle: "Focus: Knee Extension Drive & Pelvic Hinge",
+                        exercises: [
+                            { name: "Matrix Incline Leg Press Sled", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "120s", target: "Sled Ramp" },
+                            { name: "DB Romanian Deadlift (RDL)", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "24kg → 30kg DBs" },
+                            { name: "Matrix Single-Leg Extension", spec: "3 Sets × 12-15 Reps", tempo: "2-1-1-1", rest: "60s", target: "Peak Contraction" },
+                            { name: "Seated or Lying Leg Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "60s", target: "Hamstring Isolation" },
+                            { name: "Standing Calf Raise", spec: "4 Sets × 12-15 Reps", tempo: "3-2-1-1", rest: "45s", target: "2s Bottom Stretch" }
+                        ]
+                    },
+                    FRI: {
+                        name: "Upper Body Hyperemia & Arm Focus",
+                        subtitle: "Focus: High-Volume Blood Flow & Pump",
+                        exercises: [
+                            { name: "Flat DB Chest Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "Maintain Load" },
+                            { name: "Wide-Grip Lat Pulldown", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "90s", target: "Upper Lats" },
+                            { name: "DB Standing Bicep Curl (Alt)", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-1", rest: "60s", target: "12.5kg → 15kg" },
+                            { name: "Overhead DB Tricep Extension", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "Long Head Stretch" },
+                            { name: "Cable Rear Delt Flye", spec: "3 Sets × 12-15 Reps", tempo: "2-0-1-1", rest: "45s", target: "Posterior Delt" }
+                        ]
+                    },
+                    SAT: { name: "Rest & Systemic Recovery", subtitle: "Rest Day Macro Target (-50g Carbs)", exercises: [] },
+                    SUN: { name: "Rest & Weekly Measurement Check", subtitle: "Rest Day Macro Target (-50g Carbs)", exercises: [] }
+                },
+                meals: [
+                    { time: "08:30 AM", name: "Meal 1: Breakfast Base", desc: "3 Whole Eggs + 100g Egg Whites, 60g Rolled Oats, 50g Blueberries", macros: "430 kcal | 35g P | 42g C | 14g F" },
+                    { time: "12:30 PM", name: "Meal 2: Lunch Base Load", desc: "160g Cooked Chicken Breast, 190g Cooked Jasmine Rice, Green Beans, 5g Olive Oil", macros: "470 kcal | 43g P | 50g C | 10g F" },
+                    { time: "03:30 PM", name: "Meal 3: Pre-Workout (90m Prior)", desc: "55g Cream of Rice + 30g Whey Isolate, 1 Banana (100g), 1.5g Pink Salt", macros: "440 kcal | 32g P | 70g C | 3g F" },
+                    { time: "06:30 PM", name: "Meal 4: Post-Workout (0-30m)", desc: "40g Whey Isolate, 70g Dextrose or Rice Cakes with 15g Honey", macros: "400 kcal | 36g P | 62g C | 1g F" },
+                    { time: "08:30 PM", name: "Meal 5: Dinner Tissue Repair", desc: "170g White Fish / Lean Sirloin, 220g Baked Sweet Potato, Asparagus, 12g Almonds", macros: "520 kcal | 38g P | 44g C | 18g F" }
+                ]
+            },
+            2: {
+                title: "Phase 2: 450mg Test E Anabolic Surge",
+                dates: "Nov 6 - Dec 3 (Weeks 5-8)",
+                weightTarget: "73.0kg → 76.5kg",
+                calories: "2,685",
+                protein: "185g",
+                carbs: "340g",
+                fats: "65g",
+                trt: "450mg/wk Test E (225mg M/Th)",
+                creatine: "5g/day Maintenance",
+                water: "4.0L / Day",
+                workouts: {
+                    MON: {
+                        name: "Heavy Push (Chest, Overhead Press, Triceps)",
+                        subtitle: "Focus: Maximum Mechanical Load & Force Production",
+                        exercises: [
+                            { name: "Incline DB Bench Press", spec: "4 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "120s", target: "28kg → 34kg DBs" },
+                            { name: "Flat DB Chest Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "30kg → 34kg DBs" },
+                            { name: "Seated DB Shoulder Press", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-0", rest: "90s", target: "22.5kg → 26kg DBs" },
+                            { name: "Standing DB Lateral Raise", spec: "4 Sets × 12 Reps", tempo: "2-0-1-1", rest: "60s", target: "12.5kg → 14kg DBs" },
+                            { name: "Weighted Dips / Cable Pressdown", spec: "4 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "60s", target: "Heavy Load" }
+                        ]
+                    },
+                    TUE: {
+                        name: "Heavy Pull (Lats, Upper Back, Biceps)",
+                        subtitle: "Focus: High-Threshold Motor Unit Recruitment",
+                        exercises: [
+                            { name: "Matrix Lat Pulldown", spec: "4 Sets × 8-10 Reps", tempo: "3-1-1-1", rest: "90s", target: "45kg → 55kg" },
+                            { name: "Heavy Single-Arm DB Row", spec: "3 Sets × 8-10 Reps", tempo: "2-1-1-0", rest: "90s", target: "30kg → 38kg DB" },
+                            { name: "Seated Cable Row", spec: "3 Sets × 10-12 Reps", tempo: "2-1-1-1", rest: "90s", target: "Mid-Back Thickness" },
+                            { name: "Standing Strict DB Bicep Curl", spec: "4 Sets × 8-10 Reps", tempo: "3-0-1-1", rest: "60s", target: "16kg → 20kg DBs" },
+                            { name: "Incline DB Bicep Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "12.5kg → 15kg DBs" }
+                        ]
+                    },
+                    WED: { name: "Active Recovery & Mobility", subtitle: "Rest & Intra-Hydration", exercises: [] },
+                    THU: {
+                        name: "Lower Body Power (Squat Focus, Hamstrings)",
+                        subtitle: "Focus: Axial Loading & Knee Extension",
+                        exercises: [
+                            { name: "Barbell Back Squat / Heavy Goblet", spec: "4 Sets × 6-8 Reps", tempo: "3-1-1-0", rest: "150s", target: "80kg → 100kg Bar" },
+                            { name: "DB Romanian Deadlift", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "34kg → 40kg DBs" },
+                            { name: "Matrix Leg Extension", spec: "4 Sets × 10-12 Reps", tempo: "2-1-1-1", rest: "60s", target: "Quad Peak" },
+                            { name: "Seated Leg Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "60s", target: "Hamstring Stretch" },
+                            { name: "Standing Calf Raise", spec: "4 Sets × 12-15 Reps", tempo: "3-2-1-1", rest: "45s", target: "Heavy Load" }
+                        ]
+                    },
+                    FRI: {
+                        name: "Upper Body Load Escalation & Arms",
+                        subtitle: "Focus: Arm Hypertrophy & Deltoid Cap",
+                        exercises: [
+                            { name: "Incline DB Bench Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "Heavy Working Load" },
+                            { name: "Matrix Lat Pulldown", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "90s", target: "Lat Pump" },
+                            { name: "Standing DB Bicep Curl (Alt)", spec: "4 Sets × 8 Reps", tempo: "3-0-1-1", rest: "60s", target: "17.5kg → 20kg DBs" },
+                            { name: "Overhead Single-DB Tricep Ext", spec: "4 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "Tricep Mass" },
+                            { name: "DB Lateral Raise", spec: "4 Sets × 12-15 Reps", tempo: "2-0-1-1", rest: "45s", target: "12.5kg → 14kg DBs" }
+                        ]
+                    },
+                    SAT: { name: "Rest & Systemic Recovery", subtitle: "Rest Day Macro Target", exercises: [] },
+                    SUN: { name: "Rest & Weekly Measurement Check", subtitle: "Rest Day Macro Target", exercises: [] }
+                },
+                meals: [
+                    { time: "08:30 AM", name: "Meal 1: Breakfast Anabolic Fuel", desc: "3 Whole Eggs + 120g Egg Whites, 75g Rolled Oats, 75g Blueberries", macros: "490 kcal | 38g P | 55g C | 15g F" },
+                    { time: "12:30 PM", name: "Meal 2: Lunch Surge", desc: "170g Cooked Chicken Breast, 240g Cooked Jasmine Rice, Broccoli, 8g Olive Oil", macros: "550 kcal | 45g P | 62g C | 12g F" },
+                    { time: "03:30 PM", name: "Meal 3: Pre-Workout Heavy Fuel", desc: "70g Cream of Rice + 35g Whey Isolate, 1 Large Banana (120g), 2g Pink Salt", macros: "520 kcal | 36g P | 88g C | 3g F" },
+                    { time: "06:30 PM", name: "Meal 4: Post-Workout Anabolic Spike", desc: "40g Whey Isolate, 80g Dextrose or Rice Cakes with 20g Honey", macros: "450 kcal | 36g P | 75g C | 1g F" },
+                    { time: "08:30 PM", name: "Meal 5: Dinner Tissue Synthesis", desc: "180g Extra Lean Beef (95/5) / Fish, 280g Baked Potato, Salad, 15g Almonds", macros: "675 kcal | 45g P | 60g C | 24g F" }
+                ]
+            },
+            3: {
+                title: "Phase 3: Christmas Peaking & Recomp",
+                dates: "Dec 4 - Dec 25 (Weeks 9-11)",
+                weightTarget: "76.5kg → 78.0kg",
+                calories: "2,455",
+                protein: "190g",
+                carbs: "300g",
+                fats: "55g",
+                trt: "450mg/wk Test E (225mg M/Th)",
+                creatine: "5g/day Maintenance",
+                water: "4.0L / Day",
+                workouts: {
+                    MON: {
+                        name: "Heavy Push (Chest, Delts, Triceps)",
+                        subtitle: "Focus: Skin-Tight Density & Chest Fullness",
+                        exercises: [
+                            { name: "Incline DB Bench Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "120s", target: "34kg → 36kg DBs" },
+                            { name: "Flat DB Chest Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "34kg → 38kg DBs" },
+                            { name: "Seated DB Shoulder Press", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-0", rest: "90s", target: "26kg → 28kg DBs" },
+                            { name: "Standing DB Lateral Raise", spec: "4 Sets × 12-15 Reps", tempo: "2-0-1-1", rest: "45s", target: "14kg → 15kg DBs" },
+                            { name: "Rope Tricep Pushdown", spec: "3 Sets × 12-15 Reps", tempo: "3-0-1-1", rest: "45s", target: "Peak Contraction" }
+                        ]
+                    },
+                    TUE: {
+                        name: "Heavy Pull & Bicep Peak",
+                        subtitle: "Focus: Peak Bicep Vascularity & Lat Density",
+                        exercises: [
+                            { name: "Matrix Lat Pulldown", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-1", rest: "90s", target: "60kg → 65kg Stack" },
+                            { name: "Single-Arm DB Row", spec: "3 Sets × 8-10 Reps", tempo: "2-1-1-0", rest: "90s", target: "38kg → 42kg DB" },
+                            { name: "Seated Low Cable Row", spec: "3 Sets × 10-12 Reps", tempo: "2-1-1-1", rest: "90s", target: "Rhomboid Squeeze" },
+                            { name: "Standing Strict DB Bicep Curl", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-1", rest: "60s", target: "20kg → 22.5kg DBs" },
+                            { name: "Incline DB Bicep Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "15kg → 17.5kg DBs" }
+                        ]
+                    },
+                    WED: { name: "Active Recovery & Intra-Hydration", subtitle: "Rest & Hydration Maintenance", exercises: [] },
+                    THU: {
+                        name: "Lower Body Strength & Depth",
+                        subtitle: "Focus: Maximal Quad Density & Depth",
+                        exercises: [
+                            { name: "Barbell Back Squat", spec: "3 Sets × 6-8 Reps", tempo: "3-1-1-0", rest: "150s", target: "105kg → 115kg" },
+                            { name: "DB Romanian Deadlift", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "40kg → 44kg DBs" },
+                            { name: "Matrix Leg Extension", spec: "3 Sets × 12-15 Reps", tempo: "2-1-1-1", rest: "45s", target: "Quad Vascularity" },
+                            { name: "Seated Leg Curl", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "45s", target: "Hamstring Density" },
+                            { name: "Standing Calf Raise", spec: "4 Sets × 12-15 Reps", tempo: "3-2-1-1", rest: "45s", target: "Soleus Burn" }
+                        ]
+                    },
+                    FRI: {
+                        name: "Hyperemia Peaking & Vascularity Session",
+                        subtitle: "Focus: Maximum Intracellular Swell for Christmas",
+                        exercises: [
+                            { name: "Incline DB Bench Press", spec: "3 Sets × 8-10 Reps", tempo: "3-1-1-0", rest: "90s", target: "Maintain 34kg+" },
+                            { name: "Matrix Lat Pulldown", spec: "3 Sets × 10-12 Reps", tempo: "3-0-1-1", rest: "90s", target: "Lat Width" },
+                            { name: "Standing DB Bicep Curl", spec: "3 Sets × 8-10 Reps", tempo: "3-0-1-1", rest: "60s", target: "20kg DBs × 8-10" },
+                            { name: "Overhead DB Tricep Extension", spec: "3 Sets × 10-12 Reps", tempo: "3-1-1-0", rest: "60s", target: "Tricep Pump" },
+                            { name: "Standing DB Lateral Raise", spec: "4 Sets × 12-15 Reps", tempo: "2-0-1-1", rest: "45s", target: "14kg-15kg DBs" }
+                        ]
+                    },
+                    SAT: { name: "Rest & Systemic Recovery", subtitle: "Rest Day Macro Target", exercises: [] },
+                    SUN: { name: "Rest & Christmas Physique Peak Check", subtitle: "Rest Day Macro Target", exercises: [] }
+                },
+                meals: [
+                    { time: "08:30 AM", name: "Meal 1: Breakfast Peak", desc: "3 Whole Eggs + 130g Egg Whites, 60g Rolled Oats, 50g Blueberries", macros: "440 kcal | 40g P | 42g C | 14g F" },
+                    { time: "12:30 PM", name: "Meal 2: Lunch Base", desc: "170g Cooked Chicken Breast, 200g Cooked Jasmine Rice, Green Beans, 5g Olive Oil", macros: "480 kcal | 44g P | 52g C | 10g F" },
+                    { time: "03:30 PM", name: "Meal 3: Pre-Workout Peak Fuel", desc: "60g Cream of Rice + 35g Whey Isolate, 1 Banana (100g), 2g Pink Salt", macros: "465 kcal | 35g P | 75g C | 3g F" },
+                    { time: "06:30 PM", name: "Meal 4: Post-Workout Glycogen Shuttling", desc: "40g Whey Isolate, 70g Dextrose or Rice Cakes with 15g Honey", macros: "400 kcal | 36g P | 62g C | 1g F" },
+                    { time: "08:30 PM", name: "Meal 5: Dinner Tissue Hardening", desc: "180g White Fish / Lean Beef, 220g Baked Potato, Asparagus, 12g Almonds", macros: "670 kcal | 35g P | 69g C | 27g F" }
+                ]
+            }
+        };
+
+        function switchPhase(phaseNum) {
+            currentPhase = phaseNum;
+            
+            // Update Phase Buttons UI
+            const phaseBtns = document.querySelectorAll('.phase-btn');
+            phaseBtns.forEach((btn, idx) => {
+                if (idx + 1 === phaseNum) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            updateUI();
+        }
+
+        function switchDay(dayStr) {
+            currentDay = dayStr;
+
+            // Update Day Buttons UI
+            const dayBtns = document.querySelectorAll('.day-btn');
+            dayBtns.forEach(btn => {
+                if (btn.innerText === dayStr) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            updateUI();
+        }
+
+        function updateUI() {
+            const data = phaseData[currentPhase];
+
+            // Header & Specs
+            document.getElementById('phase-title-text').innerText = data.title;
+            document.getElementById('phase-target-weight').innerText = "Target: " + data.weightTarget;
+            document.getElementById('macro-calories').innerText = data.calories;
+            document.getElementById('macro-protein').innerText = data.protein;
+            document.getElementById('macro-carbs').innerText = data.carbs;
+            document.getElementById('protocol-trt').innerText = data.trt;
+            document.getElementById('protocol-creatine').innerText = data.creatine;
+            document.getElementById('water-target').innerText = "Water: " + data.water;
+
+            // Workout Updates
+            const workout = data.workouts[currentDay];
+            document.getElementById('workout-title').innerText = workout.name;
+            document.getElementById('workout-subtitle').innerText = workout.subtitle;
+
+            const exContainer = document.getElementById('exercise-container');
+            exContainer.innerHTML = '';
+
+            if (workout.exercises.length === 0) {
+                exContainer.innerHTML = `
+                    <div class="rest-day-notice">
+                        <div class="rest-day-title">ACTIVE RECOVERY DAY</div>
+                        <div>Rest, hydration, and central nervous system recovery. Keep daily steps light and hit macro targets.</div>
+                    </div>
+                `;
+            } else {
+                workout.exercises.forEach((ex, idx) => {
+                    const exCard = document.createElement('div');
+                    exCard.className = 'exercise-item';
+                    
+                    // Create set pills based on reps/spec
+                    const numSets = parseInt(ex.spec.charAt(0)) || 3;
+                    let pillsHTML = '';
+                    for (let s = 1; s <= numSets; s++) {
+                        pillsHTML += `<div class="set-pill" onclick="this.classList.toggle('done')">S${s}</div>`;
+                    }
+
+                    exCard.innerHTML = `
+                        <div class="ex-header">
+                            <div class="ex-title">${ex.name}</div>
+                            <div class="ex-target">${ex.target}</div>
+                        </div>
+                        <div class="ex-specs">
+                            <div>Sets/Reps: <span class="ex-spec-val">${ex.spec}</span></div>
+                            <div>Tempo: <span class="ex-spec-val">${ex.tempo}</span></div>
+                            <div>Rest: <span class="ex-spec-val">${ex.rest}</span></div>
+                        </div>
+                        <div class="set-checkers">
+                            ${pillsHTML}
+                        </div>
+                    `;
+                    exContainer.appendChild(exCard);
+                });
+            }
+
+            // Meals Update
+            const mealContainer = document.getElementById('meal-container');
+            mealContainer.innerHTML = '';
+
+            data.meals.forEach(meal => {
+                const mealCard = document.createElement('div');
+                mealCard.className = 'meal-item';
+                mealCard.innerHTML = `
+                    <div class="meal-time-title">
+                        <span class="meal-time">${meal.time}</span>
+                        <span class="meal-name">${meal.name}</span>
+                    </div>
+                    <div class="meal-desc">${meal.desc}</div>
+                    <div class="meal-macros">${meal.macros}</div>
+                `;
+                mealContainer.appendChild(mealCard);
+            });
+        }
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>
